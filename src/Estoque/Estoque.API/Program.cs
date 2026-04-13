@@ -1,4 +1,6 @@
+using Estoque.Domain.Interfaces;
 using Estoque.Infrastructure.Data;
+using Estoque.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,12 +23,17 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<EstoqueDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Estoque API v1");
+    });
 }
 
 app.UseCors();

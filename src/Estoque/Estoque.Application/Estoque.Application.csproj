@@ -13,4 +13,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Estoque.Domain\Estoque.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

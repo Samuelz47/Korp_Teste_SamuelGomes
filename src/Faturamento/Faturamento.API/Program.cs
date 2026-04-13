@@ -1,4 +1,6 @@
+using Faturamento.Domain.Interfaces;
 using Faturamento.Infrastructure.Data;
+using Faturamento.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddDbContext<FaturamentoDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<INotaFiscalRepository, NotaFiscalRepository>();
 
 var app = builder.Build();
 
