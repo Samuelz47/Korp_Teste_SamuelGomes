@@ -1,0 +1,49 @@
+﻿services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - estoque-api
+      - faturamento-api
+    networks:
+      - korp-network
+
+  estoque-api:
+    build:
+      context: .
+      dockerfile: src/Estoque/Estoque.API/Dockerfile
+    ports:
+      - "5027:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/estoque.db
+    volumes:
+      - estoque-data:/app/data
+    networks:
+      - korp-network
+
+  faturamento-api:
+    build:
+      context: .
+      dockerfile: src/Faturamento/Faturamento.API/Dockerfile
+    ports:
+      - "5169:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/faturamento.db
+    volumes:
+      - faturamento-data:/app/data
+    networks:
+      - korp-network
+
+volumes:
+  estoque-data:
+  faturamento-data:
+
+
+networks:
+  korp-network:
+    driver: bridge

@@ -1,0 +1,53 @@
+### System files ###
+.DS_Store
+Thumbs.db
+
+### IDEs ###
+.idea/
+.vscode/
+*.sln.user
+*.user
+*.userosscache
+*.sln.docstate
+.vs/
+
+### .NET ###
+**/bin/
+**/obj/
+**/Log/
+**/[Tt]est[Rr]esults/
+*.suo
+*.user
+*.userosscache
+*.sln.docstate
+*.userprefs
+appsettings.Development.json
+appsettings.Local.json
+
+### Databases (SQLite) ###
+*.db
+*.db-shm
+*.db-wal
+
+### Angular / Node ###
+**/node_modules/
+**/dist/
+**/.angular/cache/
+**/tmp/
+**/out-tsc/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### AI & Antigravity (Hidden for Technical Test) ###
+.gemini/
+.antigravity/
+agents/
+brain/
+implementation_plan.md
+task.md
+walkthrough.md
+
+### Docker ###
+**/docker/*.env
+.docker-compose.override.yml
