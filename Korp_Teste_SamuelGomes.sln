@@ -40,6 +40,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Faturamento.Infrastructure", "src\Faturamento\Faturamento.Infrastructure\Faturamento.Infrastructure.csproj", "{998D8285-84E4-4274-89D7-378326BABEE9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D8C4BF91-96AB-4813-8806-CB1260915C18} = {D8C4BF91-96AB-4813-8806-CB1260915C18}
+		{6C237CD1-43DA-44BD-BB36-F4F0DAA9BE5B} = {6C237CD1-43DA-44BD-BB36-F4F0DAA9BE5B}
 	EndProjectSection
 EndProject
 Global

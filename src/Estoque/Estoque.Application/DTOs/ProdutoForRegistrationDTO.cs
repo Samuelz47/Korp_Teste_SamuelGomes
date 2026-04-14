@@ -4,5 +4,5 @@ public class ProdutoForRegistrationDTO
 {
     public string Codigo { get; set; } = null!;
     public string Descricao { get; set; } = null!;
-    public decimal Saldo { get; set; }
+    public int Saldo { get; set; }
 }

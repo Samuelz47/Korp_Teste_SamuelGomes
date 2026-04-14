@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Faturamento.Domain\Faturamento.Domain.csproj" />
+        <ProjectReference Include="..\Faturamento.Application\Faturamento.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>

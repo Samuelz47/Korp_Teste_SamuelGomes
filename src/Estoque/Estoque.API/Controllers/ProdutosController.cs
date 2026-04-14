@@ -41,4 +41,29 @@ public class ProdutosController : ControllerBase
 
         return CreatedAtAction(nameof(ObterTodos), new { id = produto.Id }, produto);
     }
+
+    [HttpPut]
+    public async Task<IActionResult> AbaterSaldo([FromBody] List<BaixaEstoqueDTO> itens)
+    {
+        if (itens is null || !itens.Any()) return BadRequest("Nenhum item enviado para baixa de estoque.");
+
+        foreach (var item in itens)
+        {
+            var produto = await _repository.ObterPorCodigoAsync(item.ProdutoCodigo);
+            
+            if (produto is null) return NotFound($"Produto com código {item.ProdutoCodigo} não encontrado.");
+
+            try
+            {
+                produto.AbaterSaldo(item.Quantidade);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Erro = ex.Message, Produto = item.ProdutoCodigo });
+            }
+        }
+        
+        await _repository.SalvarAlteracoesAsync();
+        return Ok(new { Mensagem = "Estoque atualizado com sucesso!" });
+    }
 }

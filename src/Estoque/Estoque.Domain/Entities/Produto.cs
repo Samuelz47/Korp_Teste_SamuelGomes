@@ -7,9 +7,9 @@ public class Produto
     public Guid Id { get; init; } = Guid.NewGuid();
     public string Codigo { get; private set; }
     public string Descricao { get; private set; }
-    public decimal Saldo { get; private set; }
+    public int Saldo { get; private set; }
 
-    public Produto(decimal saldo, string descricao, string codigo)
+    public Produto(int saldo, string descricao, string codigo)
     {
         Saldo = saldo;
         Descricao = descricao;

@@ -14,6 +14,7 @@ public class NotaFiscal
     public NotaFiscal()
     {
         Status = Status.Aberta;
+        NumeroSequencial = new Random().Next(100000, 999999);
     }
     
     public void AdicionarItem(string produtoCodigo, int quantidade)
