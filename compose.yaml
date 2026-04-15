@@ -34,10 +34,13 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Data Source=/app/data/faturamento.db
+      - EstoqueServiceUrl=http://estoque-api:8080/
     volumes:
       - faturamento-data:/app/data
     networks:
       - korp-network
+    depends_on:
+      - estoque-api
 
 volumes:
   estoque-data:

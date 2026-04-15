@@ -42,7 +42,7 @@ yarn-error.log*
 ### AI & Antigravity (Hidden for Technical Test) ###
 .gemini/
 .antigravity/
-agents/
+.agents/
 brain/
 implementation_plan.md
 task.md
