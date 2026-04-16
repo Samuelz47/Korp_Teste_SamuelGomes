@@ -18,6 +18,18 @@ export class FaturamentoService {
         );
     }
 
+    obterTodas(): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    fecharNota(id: string): Observable<any> {
+        return this.http.patch<any>(`${this.apiUrl}/${id}/fechar`, {}).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: HttpErrorResponse) {
         let errorMessage = 'Ocorreu um erro desconhecido ao comunicar com o Faturamento.';
         if (error.error instanceof ErrorEvent) {

@@ -41,4 +41,36 @@ public class NotasFiscaisController : ControllerBase
             return StatusCode(500, new { Erro = "Ocorreu um erro interno ao processar a requisição", Detalhe = ex.Message });
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> ObterTodas()
+    {
+        try
+        {
+            var notasFiscais = await _service.ObterTodasNotasFiscaisAsync();
+            return Ok(notasFiscais);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Erro = "Ocorreu um erro interno ao processar a requisição", Detalhe = ex.Message });
+        }
+    }
+
+    [HttpPatch("{id}/fechar")]
+    public async Task<IActionResult> FecharNotaFiscal(Guid id)
+    {
+        try
+        {
+            await _service.FecharNotaFiscalAsync(id);
+            return NoContent();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { Erro = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Erro = "Ocorreu um erro interno ao processar a requisição", Detalhe = ex.Message });
+        }
+    }
 }

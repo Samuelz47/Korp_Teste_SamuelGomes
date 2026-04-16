@@ -16,6 +16,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
                 if (error.error) {
                     if (typeof error.error === 'string') {
                         errorMessage = error.error;
+                    } else if (error.error.Erro) { // C# Anonymous object format { Erro: "..." }
+                        errorMessage = error.error.Erro;
+                    } else if (error.error.erro) {
+                        errorMessage = error.error.erro;
                     } else if (error.error.detail) {
                         errorMessage = error.error.detail;
                     } else if (error.error.message) {

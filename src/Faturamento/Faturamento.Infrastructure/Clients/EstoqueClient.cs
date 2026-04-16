@@ -13,9 +13,15 @@ public class EstoqueClient : IEstoqueClient
         _httpClient = httpClient;
     }
     
-    public async Task<bool> AbaterSaldoAsync(List<NotaFiscalItemDTO> itens)
+    public async Task<bool> AbaterSaldoAsync(Guid notaFiscalId, List<NotaFiscalItemDTO> itens)
     {
-        var response = await _httpClient.PutAsJsonAsync("/api/Produtos", itens);
+        var request = new HttpRequestMessage(HttpMethod.Put, "/api/Produtos")
+        {
+            Content = JsonContent.Create(itens)
+        };
+        request.Headers.Add("X-Idempotency-Key", notaFiscalId.ToString());
+
+        var response = await _httpClient.SendAsync(request);
         
         return response.IsSuccessStatusCode;
     }

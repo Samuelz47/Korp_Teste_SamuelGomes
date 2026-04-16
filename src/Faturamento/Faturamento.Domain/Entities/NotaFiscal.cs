@@ -14,7 +14,11 @@ public class NotaFiscal
     public NotaFiscal()
     {
         Status = Status.Aberta;
-        NumeroSequencial = new Random().Next(100000, 999999);
+    }
+    
+    public void DefinirNumeroSequencial(int numero)
+    {
+        NumeroSequencial = numero;
     }
     
     public void AdicionarItem(string produtoCodigo, int quantidade)
@@ -24,6 +28,9 @@ public class NotaFiscal
 
     public void FecharNota()
     {
+        if (Status != Status.Aberta)
+            throw new InvalidOperationException("Apenas notas com status 'Aberta' podem ser fechadas.");
+
         Status = Status.Fechada;
     }
 }

@@ -18,14 +18,9 @@ public class NotaFiscalService : INotaFiscalService
 
     public async Task<NotaFiscal> GerarNotaFiscalAsync(NotaFiscalForRegistrationDTO notaFiscalDto)
     {
-        var sucessoEstoque = await _estoqueClient.AbaterSaldoAsync(notaFiscalDto.Itens);
-        
-        if (!sucessoEstoque)
-        {
-            throw new InvalidOperationException("Não foi possível aprovar a Nota Fiscal. Verifique o saldo no Estoque ou a disponibilidade do sistema.");
-        }
-
+        var numero = await _repository.ObterProximoNumeroSequencialAsync();
         var notaFiscal = new NotaFiscal();
+        notaFiscal.DefinirNumeroSequencial(numero);
 
         foreach (var item in notaFiscalDto.Itens)
         {
@@ -35,5 +30,31 @@ public class NotaFiscalService : INotaFiscalService
         await _repository.AdicionarAsync(notaFiscal);
         await _repository.SalvarAlteracoesAsync();
         return notaFiscal;
+    }
+
+    public async Task<IEnumerable<NotaFiscal>> ObterTodasNotasFiscaisAsync()
+    {
+        return await _repository.ObterTodasAsync();
+    }
+
+    public async Task FecharNotaFiscalAsync(Guid id)
+    {
+        var notaFiscal = await _repository.ObterPorIdAsync(id);
+        if (notaFiscal == null)
+            throw new InvalidOperationException("Nota Fiscal não encontrada.");
+
+        var itensParaBaixa = notaFiscal.Itens
+            .Select(i => new NotaFiscalItemDTO
+            {
+                ProdutoCodigo = i.ProdutoCodigo,
+                Quantidade = i.Quantidade
+            }).ToList();
+
+        var sucessoEstoque = await _estoqueClient.AbaterSaldoAsync(notaFiscal.Id, itensParaBaixa);
+        if (!sucessoEstoque)
+            throw new InvalidOperationException("Não foi possível abater o estoque. Verifique o saldo ou a disponibilidade do serviço.");
+
+        notaFiscal.FecharNota();
+        await _repository.SalvarAlteracoesAsync();
     }
 }
